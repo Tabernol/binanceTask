@@ -25,7 +25,6 @@ import java.util.Set;
 @Slf4j
 public class CryptoInfoController {
     private final CryptoInfoService cryptoInfoService;
-    private final CryptoInfoReactiveService cryptoInfoReactiveService;
 
     @GetMapping
     public ResponseEntity<Set<CryptoInfo>> getAllCryptoInfo() {
@@ -38,17 +37,5 @@ public class CryptoInfoController {
             throws CryptoPairNameException {
         String pair = cryptoInfoService.getPrice(cryptoPair);
         return ResponseEntity.status(HttpStatus.OK).body(pair);
-    }
-
-
-    @GetMapping("/reactive")
-    public Flux<CryptoInfo> getAllCryptoInfoReactive() {
-        return cryptoInfoReactiveService.getAll();
-    }
-
-
-    @GetMapping("/reactive/{cryptoPair}")
-    public Mono<String> getPriceReactive(@PathVariable String cryptoPair) {
-        return cryptoInfoReactiveService.getPrice(cryptoPair);
     }
 }
